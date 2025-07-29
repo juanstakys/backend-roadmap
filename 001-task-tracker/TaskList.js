@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 
 export class Task {
   constructor(id, description) {
+    this.id = id;
     this.description = description;
     this.status = "TODO";
     this.createdAt = Date.now();
@@ -23,20 +24,21 @@ class TaskList {
   }
 
   createEmptyList() {
+    console.log("creating empty list");
     writeFileSync(this.path, "[]\n");
   }
 
   getList() {
-    const data = readFileSync(this.path);
-    console.log(data);
-
+    const data = readFileSync(this.path, { encoding: "utf-8" });
+    if (data == "") return [];
+    // TODO: handle invalid json file
     return JSON.parse(data);
   }
 
   getLastId() {
-    const data = readFileSync(this.path);
-    const list = JSON.parse(data);
-    return list[list.length - 1]?.id;
+    const list = this.getList();
+    if (list.length) return list[list.length - 1]?.id;
+    return 0;
   }
 
   addTask(task) {
