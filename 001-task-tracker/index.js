@@ -12,7 +12,10 @@ const VALID_ACTIONS = {
     console.log(`Task added successfully (ID: ${newId})`);
   },
   update: (task) => console.log(`Updating ${task}`),
-  delete: (id) => console.log(`Deleting task id ${id}`),
+  delete: (id) => {
+    taskList.deleteTask(+id);
+    console.log(`Deleted task id ${id}`);
+  },
   list: () => {
     console.log(taskList.getList()); // TODO: Format
   },

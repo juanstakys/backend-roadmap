@@ -46,6 +46,12 @@ class TaskList {
     list.push(task);
     writeFileSync(this.path, JSON.stringify(list));
   }
+
+  deleteTask(id) {
+    const list = this.getList();
+    const newList = list.filter((task) => task.id !== id);
+    writeFileSync(this.path, JSON.stringify(newList));
+  }
 }
 
 export const taskList = new TaskList();
