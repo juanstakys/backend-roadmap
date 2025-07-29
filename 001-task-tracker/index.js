@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 import { argv } from "process";
-import { Task, TaskList } from "./TaskList.js";
+import { Task, taskList } from "./TaskList.js";
 
-const MAX_ARGS = 5;
+const MAX_ARGS = 5; // TODO: make it depend on the chosen action. add: 1, update: 2, delete: 1, mark: 2, list: 1.
 const VALID_ACTIONS = {
   add: (description) => {
     console.log(`Adding ${description}`);
     const task = new Task(description);
     task.print();
-    TaskList.createEmptyList();
+    taskList.createEmptyList();
+    taskList.addTask(task);
   },
   update: (task) => console.log(`Updating ${task}`),
   delete: (id) => console.log(`Deleting task id ${id}`),

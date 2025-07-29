@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 export class Task {
   constructor(description) {
@@ -18,12 +18,34 @@ export class Task {
   }
 }
 
-export class TaskList {
-  constructor() {}
+class TaskList {
+  constructor() {
+    this.path = "tasks.json";
+  }
 
-  static createEmptyList() {
-    writeFile("tasks.json", "[]\n", (err) => {
-      if (err) console.error(err);
-    });
+  createEmptyList() {
+    writeFileSync(this.path, "[]\n");
+  }
+
+  getList() {
+    const data = readFileSync(this.path);
+    console.log(data);
+
+    return JSON.parse(data);
+  }
+
+  getLastId() {
+    data = readFileSync(this.path);
+    const list = JSON.parse(data);
+    const listLength = list.length;
+    return list[length]?.id;
+  }
+
+  addTask(task) {
+    let list = this.getList();
+    list.push(task);
+    writeFileSync(this.path, JSON.stringify(list));
   }
 }
+
+export const taskList = new TaskList();
