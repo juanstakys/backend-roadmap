@@ -7,8 +7,8 @@ const MAX_ARGS = 5; // TODO: make it depend on the chosen action. add: 1, update
 const VALID_ACTIONS = {
   add: (description) => {
     console.log(`Adding ${description}`);
-    const task = new Task(description);
-    task.print();
+    const newId = taskList.getLastId() + 1;
+    const task = new Task(newId, description);
     taskList.createEmptyList();
     taskList.addTask(task);
   },

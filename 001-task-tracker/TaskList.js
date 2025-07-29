@@ -1,8 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 
 export class Task {
-  constructor(description) {
-    this.id = 123;
+  constructor(id, description) {
     this.description = description;
     this.status = "TODO";
     this.createdAt = Date.now();
@@ -10,7 +9,7 @@ export class Task {
   }
 
   print() {
-    console.log("ID is: " + this.id);
+    console.log("ID is: " + this?.id);
     console.log("Description is: " + this.description);
     console.log("Status is: " + this.status);
     console.log("createdAt is: " + this.createdAt);
@@ -35,10 +34,9 @@ class TaskList {
   }
 
   getLastId() {
-    data = readFileSync(this.path);
+    const data = readFileSync(this.path);
     const list = JSON.parse(data);
-    const listLength = list.length;
-    return list[length]?.id;
+    return list[list.length - 1]?.id;
   }
 
   addTask(task) {
