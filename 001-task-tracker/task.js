@@ -5,12 +5,45 @@ import { readFile, writeFile } from "fs";
 
 const MAX_ARGS = 5;
 const VALID_ACTIONS = {
-  add: (task) => console.log(`Adding ${task}`),
+  add: (description) => {
+    console.log(`Adding ${description}`);
+    const task = new Task(description);
+    task.print();
+    TaskList.createEmptyList();
+  },
   update: (task) => console.log(`Updating ${task}`),
-  delete: (task) => console.log(`Deleting ${task}`),
+  delete: (id) => console.log(`Deleting task id ${id}`),
   list: (task) => console.log(`Listing ${task}`),
   mark: (task) => console.log(`Marking ${task}`),
 };
+
+class Task {
+  constructor(description) {
+    this.id = 123;
+    this.description = description;
+    this.status = "TODO";
+    this.createdAt = Date.now();
+    this.updatedAt = Date.now();
+  }
+
+  print() {
+    console.log("ID is: " + this.id);
+    console.log("Description is: " + this.description);
+    console.log("Status is: " + this.status);
+    console.log("createdAt is: " + this.createdAt);
+    console.log("updatedAt is: " + this.updatedAt);
+  }
+}
+
+class TaskList {
+  constructor() {}
+
+  static createEmptyList() {
+    writeFile("tasks.json", "[]\n", (err) => {
+      if (err) console.error(err);
+    });
+  }
+}
 
 // Argument parsing and validation
 const action_name = argv[2];
