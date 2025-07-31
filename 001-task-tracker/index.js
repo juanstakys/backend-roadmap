@@ -11,7 +11,11 @@ const VALID_ACTIONS = {
     taskList.addTask(task);
     console.log(`Task added successfully (ID: ${newId})`);
   },
-  update: (task) => console.log(`Updating ${task}`),
+  update: (task) => {
+    const [id, description] = task.split(" ", 2);
+    taskList.updateTask(id, description);
+    console.log(`Task updated successfully`);
+  },
   delete: (id) => {
     taskList.deleteTask(+id);
     console.log(`Deleted task id ${id}`);
@@ -19,7 +23,11 @@ const VALID_ACTIONS = {
   list: () => {
     console.log(taskList.getList()); // TODO: Format
   },
-  mark: (task) => console.log(`Marking ${task}`),
+  mark: (task) => {
+    const [id, status] = task.split(" ", 2);
+    taskList.markTask(id, status);
+    console.log(`Task marked ${status}`);
+  },
 };
 
 // Argument parsing and validation
