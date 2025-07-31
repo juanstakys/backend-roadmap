@@ -29,6 +29,12 @@ class TaskList {
     return JSON.parse(data);
   }
 
+  findBy(field, value) {
+    const list = this.getList();
+    const task = list.find((task) => task[field] == value); // Return task as REFERENCE. NOT COPY
+    return task;
+  }
+
   getLastId() {
     const list = this.getList();
     if (list.length) return list[list.length - 1]?.id;
@@ -42,8 +48,7 @@ class TaskList {
   }
 
   updateTask(id, description) {
-    const list = this.getList();
-    const task = list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
+    const task = this.findBy("id", id);
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
     writeFileSync(this.path, JSON.stringify(list));
   }
@@ -55,9 +60,8 @@ class TaskList {
   }
 
   markTask(id, status) {
-    if (!this.VALID_STATUSES.includes(status)) return;
-    const list = this.getList();
-    const task = list.find((task) => task.id == id); // TODO: Create method to find by id
+    if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
+    const task = this.findBy("id", id);
     task.status = status;
     writeFileSync(this.path, JSON.stringify(list));
   }
@@ -69,9 +73,7 @@ class TaskList {
       list.forEach((task) => {
         console.log(`${task.id}. ${task.description}\t\t${task.status}`);
       });
-    }
-
-    if (!this.VALID_STATUSES.includes(status)) return;
+    } else if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
     list.forEach((task) => {
       if (task.status === status) {
         console.log(`${task.id}. ${task.description}\t\t${task.status}`);

@@ -24,9 +24,13 @@ const VALID_ACTIONS = {
     taskList.list(status);
   },
   mark: (task) => {
-    const [id, status] = task.split(" ", 2);
-    taskList.markTask(id, status);
-    console.log(`Task marked ${status}`); // TODO: Don't display if error
+    const [status, id] = task.split(" ", 2);
+    try {
+      taskList.markTask(id, status);
+      console.log(`Task marked ${status}`);
+    } catch (err) {
+      console.error(err);
+    }
   },
 };
 
@@ -34,7 +38,7 @@ const VALID_ACTIONS = {
 const action_name = argv[2];
 const action_info = argv.slice(3).join(" ");
 
-if (argv.length > MAX_ARGS) throw `Too many arguments.`; // TODO: Improve error message
+if (argv.length > MAX_ARGS) throw `Too many arguments.`;
 if (!Object.keys(VALID_ACTIONS).includes(action_name))
   throw `Invalid action name: ${action_name}.`;
 
