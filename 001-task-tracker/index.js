@@ -21,7 +21,7 @@ const VALID_ACTIONS = {
     console.log(`Deleted task id ${id}`);
   },
   list: (status) => {
-    taskList.list(status);
+    taskList.listTasks(status);
   },
   mark: (task) => {
     const [status, id] = task.split(" ", 2);

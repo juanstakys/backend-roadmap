@@ -31,6 +31,7 @@ export class Task {
 
 class TaskList {
   constructor(tryLimit) {
+    // Search first non-corrupt or non-existent file "tasksN.json"
     for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
       this.path = `tasks${tryCount}.json`;
       if (!fileExists(this.path)) {
@@ -53,63 +54,41 @@ class TaskList {
     writeFileSync(path, "[]\n");
   }
 
-  static isValidFile(path) {
-    const dataStr = readFileSync(this.path, { encoding: "utf-8" });
-    const [err, _] = toValidJson(dataStr);
-    return err == null;
-  }
-
-  getList() {
-    const dataStr = readFileSync(this.path, { encoding: "utf-8" });
-    if (dataStr == "") return [];
-    // TODO: handle invalid json file
-    const [isValid, data] = toValidJson(dataStr);
-    if (isValid) return data;
-    else console.error("Invalid JSON.");
-  }
-
   getLastId() {
-    const list = this.getList();
-    if (list.length) return list[list.length - 1]?.id;
+    if (this.list.length) return this.list[this.list.length - 1]?.id;
     return 0;
   }
 
   addTask(task) {
-    let list = this.getList();
-    list.push(task);
-    writeFileSync(this.path, JSON.stringify(list));
+    this.list.push(task);
+    writeFileSync(this.path, JSON.stringify(this.list));
   }
 
   updateTask(id, description) {
-    const list = this.getList();
-    const task = list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
+    const task = this.list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
-    writeFileSync(this.path, JSON.stringify(list));
+    writeFileSync(this.path, JSON.stringify(this.list));
   }
 
   deleteTask(id) {
-    const list = this.getList();
-    const newList = list.filter((task) => task.id !== id);
+    const newList = this.list.filter((task) => task.id !== id);
     writeFileSync(this.path, JSON.stringify(newList));
   }
 
   markTask(id, status) {
     if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
-    const list = this.getList();
-    const task = list.find((task) => task.id == id);
+    const task = this.list.find((task) => task.id == id);
     task.status = status;
-    writeFileSync(this.path, JSON.stringify(list));
+    writeFileSync(this.path, JSON.stringify(this.list));
   }
 
-  list(status) {
-    const list = this.getList();
-
+  listTasks(status) {
     if (!status) {
-      list.forEach((task) => {
+      this.list.forEach((task) => {
         console.log(`${task.id}. ${task.description}\t\t${task.status}`);
       });
     } else if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
-    list.forEach((task) => {
+    this.list.forEach((task) => {
       if (task.status === status) {
         console.log(`${task.id}. ${task.description}\t\t${task.status}`);
       }
