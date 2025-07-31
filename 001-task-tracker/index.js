@@ -12,8 +12,8 @@ const VALID_ACTIONS = {
     console.log(`Task added successfully (ID: ${newId})`);
   },
   update: (task) => {
-    const [id, description] = task.split(" ", 2);
-    taskList.updateTask(id, description);
+    const [id, ...description] = task.split(" ");
+    taskList.updateTask(id, description.join(" "));
     console.log(`Task updated successfully`);
   },
   delete: (id) => {

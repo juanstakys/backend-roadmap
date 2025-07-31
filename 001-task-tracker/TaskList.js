@@ -1,5 +1,15 @@
 import { readFileSync, writeFileSync } from "fs";
 
+// returns [isValidJson: bool, data: Object | error: Error].
+function toValidJson(str) {
+  try {
+    data = JSON.parse(str);
+  } catch (e) {
+    return [false, e];
+  }
+  return [true, data];
+}
+
 export class Task {
   constructor(id, description) {
     this.id = id;
@@ -13,20 +23,23 @@ export class Task {
 class TaskList {
   constructor() {
     this.path = "tasks.json";
+    TaskList.createEmptyList(this.path);
   }
 
   VALID_STATUSES = ["todo", "in-progress", "done"];
 
-  createEmptyList() {
+  static createEmptyList(path) {
     console.log("creating empty list");
-    writeFileSync(this.path, "[]\n");
+    writeFileSync(path, "[]\n");
   }
 
   getList() {
-    const data = readFileSync(this.path, { encoding: "utf-8" });
-    if (data == "") return [];
+    const dataStr = readFileSync(this.path, { encoding: "utf-8" });
+    if (dataStr == "") return [];
     // TODO: handle invalid json file
-    return JSON.parse(data);
+    const [isValid, data] = toValidJson();
+    if (isValid) return data;
+    else console.error("Invalid JSON.");
   }
 
   getLastId() {
