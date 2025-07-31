@@ -1,1 +1,1 @@
-[{"id":1,"description":"chau","status":"TODO","createdAt":1753962346525,"updatedAt":1753962346525},{"id":2,"description":"como","status":"done","createdAt":1753962362807,"updatedAt":1753962362807}]
+[{"id":1,"description":"Comprar pan","status":"in-progress","createdAt":1753972366063,"updatedAt":1753972366063},{"id":2,"description":"Terminar proyecto","status":"todo","createdAt":1753972374838,"updatedAt":1753972374838},{"id":3,"description":"Pasear a Luna","status":"done","createdAt":1753972382100,"updatedAt":1753972382100}]

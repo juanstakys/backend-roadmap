@@ -8,14 +8,6 @@ export class Task {
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
   }
-
-  print() {
-    console.log("ID is: " + this?.id);
-    console.log("Description is: " + this.description);
-    console.log("Status is: " + this.status);
-    console.log("createdAt is: " + this.createdAt);
-    console.log("updatedAt is: " + this.updatedAt);
-  }
 }
 
 class TaskList {
@@ -68,6 +60,23 @@ class TaskList {
     const task = list.find((task) => task.id == id); // TODO: Create method to find by id
     task.status = status;
     writeFileSync(this.path, JSON.stringify(list));
+  }
+
+  list(status) {
+    const list = this.getList();
+
+    if (!status) {
+      list.forEach((task) => {
+        console.log(`${task.id}. ${task.description}\t\t${task.status}`);
+      });
+    }
+
+    if (!this.VALID_STATUSES.includes(status)) return;
+    list.forEach((task) => {
+      if (task.status === status) {
+        console.log(`${task.id}. ${task.description}\t\t${task.status}`);
+      }
+    });
   }
 }
 

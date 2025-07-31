@@ -20,13 +20,13 @@ const VALID_ACTIONS = {
     taskList.deleteTask(+id);
     console.log(`Deleted task id ${id}`);
   },
-  list: () => {
-    console.log(taskList.getList()); // TODO: Format
+  list: (status) => {
+    taskList.list(status);
   },
   mark: (task) => {
     const [id, status] = task.split(" ", 2);
     taskList.markTask(id, status);
-    console.log(`Task marked ${status}`);
+    console.log(`Task marked ${status}`); // TODO: Don't display if error
   },
 };
 
