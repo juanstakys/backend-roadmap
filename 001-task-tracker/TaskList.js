@@ -5,9 +5,18 @@ function toValidJson(str) {
   try {
     data = JSON.parse(str);
   } catch (e) {
-    return [false, e];
+    return [error, null];
   }
-  return [true, data];
+  return [null, data];
+}
+
+function fileExists(file) {
+  try {
+    accessSync(this.path, constants.F_OK);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export class Task {
@@ -27,8 +36,12 @@ class TaskList {
 
     for (tryCount; tryCount <= tryLimit; tryCount++) {
       try {
-        accessSync(this.path, constants.F_OK);
-        TaskList.createEmptyList(this.path);
+        if (!fileExists(thi.path)) {
+          TaskList.createEmptyList(this.path);
+        } else {
+          const dataStr = readFileSync(this.path, { encoding: "utf-8" });
+          const [isValid, data] = toValidJson(dataStr);
+        }
       } catch {}
     }
   }
@@ -42,8 +55,8 @@ class TaskList {
 
   static isValidFile(path) {
     const dataStr = readFileSync(this.path, { encoding: "utf-8" });
-    const [isValid, _] = toValidJson(dataStr);
-    return isValid;
+    const [err, _] = toValidJson(dataStr);
+    return err == null;
   }
 
   getList() {
