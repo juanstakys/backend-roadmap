@@ -31,18 +31,18 @@ export class Task {
 
 class TaskList {
   constructor(tryLimit) {
-    let tryCount = 1;
-    this.path = "tasks.json";
-
-    for (tryCount; tryCount <= tryLimit; tryCount++) {
-      try {
-        if (!fileExists(thi.path)) {
-          TaskList.createEmptyList(this.path);
-        } else {
-          const dataStr = readFileSync(this.path, { encoding: "utf-8" });
-          const [isValid, data] = toValidJson(dataStr);
-        }
-      } catch {}
+    for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
+      this.path = `tasks${tryCount}.json`;
+      if (!fileExists(this.path)) {
+        TaskList.createEmptyList(this.path);
+        this.list = [];
+        break;
+      } else {
+        const dataStr = readFileSync(this.path, { encoding: "utf-8" });
+        const [error, data] = toValidJson(dataStr);
+        if (error) continue;
+        this.list = JSON.parse(data);
+      }
     }
   }
 
@@ -117,4 +117,4 @@ class TaskList {
   }
 }
 
-export const taskList = new TaskList();
+export const taskList = new TaskList(10);
