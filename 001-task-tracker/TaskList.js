@@ -43,7 +43,7 @@ class TaskList {
 
   updateTask(id, description) {
     const list = this.getList();
-    const task = list.find((task) => task[field] == value); // Return task as REFERENCE. NOT COPY
+    const task = list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
     writeFileSync(this.path, JSON.stringify(list));
   }
@@ -57,7 +57,7 @@ class TaskList {
   markTask(id, status) {
     if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
     const list = this.getList();
-    const task = list.find((task) => task[field] == value);
+    const task = list.find((task) => task.id == id);
     task.status = status;
     writeFileSync(this.path, JSON.stringify(list));
   }
