@@ -29,12 +29,6 @@ class TaskList {
     return JSON.parse(data);
   }
 
-  findBy(field, value) {
-    const list = this.getList();
-    const task = list.find((task) => task[field] == value); // Return task as REFERENCE. NOT COPY
-    return task;
-  }
-
   getLastId() {
     const list = this.getList();
     if (list.length) return list[list.length - 1]?.id;
@@ -48,7 +42,8 @@ class TaskList {
   }
 
   updateTask(id, description) {
-    const task = this.findBy("id", id);
+    const list = this.getList();
+    const task = list.find((task) => task[field] == value); // Return task as REFERENCE. NOT COPY
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
     writeFileSync(this.path, JSON.stringify(list));
   }
@@ -61,7 +56,8 @@ class TaskList {
 
   markTask(id, status) {
     if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
-    const task = this.findBy("id", id);
+    const list = this.getList();
+    const task = list.find((task) => task[field] == value);
     task.status = status;
     writeFileSync(this.path, JSON.stringify(list));
   }
