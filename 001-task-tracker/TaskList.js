@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { accessSync, constants, readFileSync, writeFileSync } from "fs";
 
 // returns [isValidJson: bool, data: Object | error: Error].
 function toValidJson(str) {
@@ -21,9 +21,16 @@ export class Task {
 }
 
 class TaskList {
-  constructor() {
+  constructor(tryLimit) {
+    let tryCount = 1;
     this.path = "tasks.json";
-    TaskList.createEmptyList(this.path);
+
+    for (tryCount; tryCount <= tryLimit; tryCount++) {
+      try {
+        accessSync(this.path, constants.F_OK);
+        TaskList.createEmptyList(this.path);
+      } catch {}
+    }
   }
 
   VALID_STATUSES = ["todo", "in-progress", "done"];
@@ -33,11 +40,17 @@ class TaskList {
     writeFileSync(path, "[]\n");
   }
 
+  static isValidFile(path) {
+    const dataStr = readFileSync(this.path, { encoding: "utf-8" });
+    const [isValid, _] = toValidJson(dataStr);
+    return isValid;
+  }
+
   getList() {
     const dataStr = readFileSync(this.path, { encoding: "utf-8" });
     if (dataStr == "") return [];
     // TODO: handle invalid json file
-    const [isValid, data] = toValidJson();
+    const [isValid, data] = toValidJson(dataStr);
     if (isValid) return data;
     else console.error("Invalid JSON.");
   }
