@@ -15,7 +15,6 @@ function fileExists(file) {
     accessSync(file, constants.F_OK);
     return true;
   } catch (e) {
-    console.error(e);
     return false;
   }
 }
@@ -36,12 +35,10 @@ class TaskList {
     for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
       this.path = `./tasks${tryCount}.json`;
       if (!fileExists(this.path)) {
-        console.log(`File ${this.path} does NOT exist`);
         TaskList.createEmptyList(this.path);
         this.list = [];
         break;
       } else {
-        console.log(`File ${this.path} DOES exist`);
         const dataStr = readFileSync(this.path, { encoding: "utf-8" });
         const [error, data] = toValidJson(dataStr);
         if (error) continue;
