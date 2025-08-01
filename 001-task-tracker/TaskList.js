@@ -41,7 +41,12 @@ class TaskList {
       } else {
         const dataStr = readFileSync(this.path, { encoding: "utf-8" });
         const [error, data] = toValidJson(dataStr);
-        if (error) continue;
+        if (error) {
+          console.error(
+            `Error parsing file ${this.path}. Check if it's corrupted or has the correct JSON format. `,
+          );
+          continue;
+        }
         this.list = data;
         break;
       }
@@ -51,12 +56,11 @@ class TaskList {
   VALID_STATUSES = ["todo", "in-progress", "done"];
 
   static createEmptyList(path) {
-    console.log("creating empty list");
+    console.log(`Creating new empty list at ${path}...`);
     writeFileSync(path, "[]\n");
   }
 
   getLastId() {
-    console.log(this.list);
     if (this.list.length) return this.list[this.list.length - 1]?.id;
     return 0;
   }
