@@ -3,18 +3,19 @@ import { accessSync, constants, readFileSync, writeFileSync } from "fs";
 // returns [isValidJson: bool, data: Object | error: Error].
 function toValidJson(str) {
   try {
-    data = JSON.parse(str);
-  } catch (e) {
+    const data = JSON.parse(str);
+    return [null, data];
+  } catch (error) {
     return [error, null];
   }
-  return [null, data];
 }
 
 function fileExists(file) {
   try {
-    accessSync(this.path, constants.F_OK);
+    accessSync(file, constants.F_OK);
     return true;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return false;
   }
 }
@@ -33,16 +34,19 @@ class TaskList {
   constructor(tryLimit) {
     // Search first non-corrupt or non-existent file "tasksN.json"
     for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
-      this.path = `tasks${tryCount}.json`;
+      this.path = `./tasks${tryCount}.json`;
       if (!fileExists(this.path)) {
+        console.log(`File ${this.path} does NOT exist`);
         TaskList.createEmptyList(this.path);
         this.list = [];
         break;
       } else {
+        console.log(`File ${this.path} DOES exist`);
         const dataStr = readFileSync(this.path, { encoding: "utf-8" });
         const [error, data] = toValidJson(dataStr);
         if (error) continue;
-        this.list = JSON.parse(data);
+        this.list = data;
+        break;
       }
     }
   }
@@ -55,6 +59,7 @@ class TaskList {
   }
 
   getLastId() {
+    console.log(this.list);
     if (this.list.length) return this.list[this.list.length - 1]?.id;
     return 0;
   }
