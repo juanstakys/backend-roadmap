@@ -79,8 +79,11 @@ const action_name =
   })(); // IIFE
 const action_info = argv.slice(3);
 
-if (!Object.keys(VALID_ACTIONS).includes(action_name))
-  throw `Invalid action name: ${action_name}.`;
+if (!Object.keys(VALID_ACTIONS).includes(action_name)) {
+  console.log(`Invalid action name: ${action_name}.`);
+  console.log(COMMAND_USAGE);
+  process.exit(0);
+}
 
 const action = VALID_ACTIONS[action_name];
 
