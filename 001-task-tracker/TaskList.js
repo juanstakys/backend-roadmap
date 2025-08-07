@@ -24,8 +24,8 @@ export class Task {
     this.id = id;
     this.description = description;
     this.status = "todo";
-    this.createdAt = Date.now();
-    this.updatedAt = Date.now();
+    this.createdAt = new Date().toUTCString();
+    this.updatedAt = new Date().toUTCString();
   }
 }
 
@@ -73,6 +73,7 @@ class TaskList {
   updateTask(id, description) {
     const task = this.list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
+    task.updatedAt = new Date().toUTCString();
     writeFileSync(this.path, JSON.stringify(this.list));
   }
 
@@ -84,7 +85,9 @@ class TaskList {
   markTask(id, status) {
     if (!this.VALID_STATUSES.includes(status)) throw "Invalid status";
     const task = this.list.find((task) => task.id == id);
+    if (task.status === status) return;
     task.status = status;
+    task.updatedAt = new Date().toUTCString();
     writeFileSync(this.path, JSON.stringify(this.list));
   }
 
