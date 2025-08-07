@@ -72,7 +72,7 @@ class TaskList {
 
   updateTask(id, description) {
     const task = this.list.find((task) => task.id == id); // Return task as REFERENCE. NOT COPY
-    if (!task) throw new Error(`Task with id ${id} not found`);
+    if (!task) throw `Task with id ${id} not found`;
     task.description = description; // Hence, editing the description of the tasks, immediately updates the list array.
     task.updatedAt = new Date().toUTCString();
     writeFileSync(this.path, JSON.stringify(this.list));

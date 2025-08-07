@@ -36,7 +36,7 @@ const VALID_ACTIONS = {
       return;
     }
     try {
-      if (typeof id !== "number") throw new Error("Invalid ID");
+      if (typeof id !== "number") throw "Invalid ID";
       console.log("description:", description);
       taskList.updateTask(+id, description);
       console.log(`Task updated successfully`);
@@ -47,7 +47,7 @@ const VALID_ACTIONS = {
   },
   delete: ([id]) => {
     try {
-      if (typeof id !== "number") throw new Error("Invalid ID");
+      if (typeof id !== "number") throw "Invalid ID";
       taskList.deleteTask(+id);
       console.log(`Deleted task id ${id}`);
     } catch (err) {
