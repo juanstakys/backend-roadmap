@@ -36,7 +36,7 @@ commands:
   mark <id> [todo | in-progress | done]
 
 Caveats:
-For multi-word descriptions, wrap <description> in single or double quotarion marks.
+For multi-word descriptions, wrap <description> in single or double quotation marks.
 ID should be a positive integer.
   ```
 
