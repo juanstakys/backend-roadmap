@@ -1,3 +1,4 @@
+```sh
 Syntax:
 
   add <description>
@@ -11,3 +12,4 @@ Syntax:
     if no status is provided, list all tasks
 
   mark <id> [todo | in-progress | done]
+  ```
