@@ -6,7 +6,8 @@
     "task",
     "todo",
     "todo-list",
-    "list"
+    "list",
+    "cli"
   ],
   "license": "GPL-3.0",
   "author": "Juan Cruz Stakys",
