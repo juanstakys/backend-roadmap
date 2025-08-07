@@ -1,5 +1,5 @@
 {
-  "name": "taskcli",
+  "name": "@jstak/taskcli",
   "version": "1.0.0",
   "description": "Create and track your easy-to-use portable TODO list",
   "keywords": [
