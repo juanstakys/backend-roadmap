@@ -1,5 +1,9 @@
 import { accessSync, constants, readFileSync, writeFileSync } from "fs";
 
+const taskDir = process.env.XDG_DATA_HOME
+  ? process.env.XDG_DATA_HOME + "/taskcli"
+  : process.env.HOME + "/.local/share/taskcli";
+
 // returns [isValidJson: bool, data: Object | error: Error].
 function toValidJson(str) {
   try {
@@ -33,7 +37,7 @@ class TaskList {
   constructor(tryLimit) {
     // Search first non-corrupt or non-existent file "tasksN.json"
     for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
-      this.path = `./tasks${tryCount}.json`;
+      this.path = `${taskDir}/tasks${tryCount}.json`;
       if (!fileExists(this.path)) {
         TaskList.createEmptyList(this.path);
         this.list = [];
