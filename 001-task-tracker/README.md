@@ -38,7 +38,7 @@ For multi-word descriptions, wrap <description> in single or double quotarion ma
 ID should be a positive integer.
   ```
 
-## Q&A:
+## Q&A
 
 **What happens if update, delete, or mark is called with a non-existent ID? (error code, message, silent ignore)?**
 
