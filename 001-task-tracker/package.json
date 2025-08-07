@@ -1,0 +1,21 @@
+{
+  "name": "taskcli",
+  "version": "1.0.0",
+  "description": "Create and track your easy-to-use portable TODO list",
+  "keywords": [
+    "task",
+    "todo",
+    "todo-list",
+    "list"
+  ],
+  "license": "GPL-3.0",
+  "author": "Juan Cruz Stakys",
+  "type": "module",
+  "main": "bin/index.js",
+  "bin": {
+    "task": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

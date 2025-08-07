@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { argv } from "process";
-import { Task, taskList } from "./TaskList.js";
+import { Task, taskList } from "../utils/TaskList.js";
 
 const COMMAND_USAGE = `
 Syntax:
