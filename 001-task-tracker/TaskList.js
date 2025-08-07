@@ -1,4 +1,11 @@
-import { accessSync, constants, readFileSync, writeFileSync } from "fs";
+import {
+  accessSync,
+  constants,
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+} from "fs";
 
 const taskDir = process.env.XDG_DATA_HOME
   ? process.env.XDG_DATA_HOME + "/taskcli"
@@ -35,6 +42,9 @@ export class Task {
 
 class TaskList {
   constructor(tryLimit) {
+    if (!existsSync(taskDir)) {
+      mkdirSync(taskDir);
+    }
     // Search first non-corrupt or non-existent file "tasksN.json"
     for (let tryCount = 1; tryCount <= tryLimit; tryCount++) {
       this.path = `${taskDir}/tasks${tryCount}.json`;
