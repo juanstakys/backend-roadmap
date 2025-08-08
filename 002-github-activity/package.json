@@ -1,0 +1,17 @@
+{
+  "name": "@jstak/gh-activity",
+  "version": "1.0.0",
+  "description": "CLI tool to fetch user activity on GitHub",
+  "keywords": [
+    "cli",
+    "github",
+    "git"
+  ],
+  "license": "GPL-3.0",
+  "author": "Juan Cruz Stakys",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
