@@ -33,7 +33,7 @@ commands:
   list [todo | in-progress | done]
     if no status is provided, list all tasks
 
-  mark <id> [todo | in-progress | done]
+  mark [todo | in-progress | done] <id>
 
 Caveats:
 For multi-word descriptions, wrap <description> in single or double quotation marks.
