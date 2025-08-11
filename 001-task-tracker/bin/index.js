@@ -16,7 +16,7 @@ Syntax:
   list [todo | in-progress | done]
     if no status is provided, list all tasks
 
-    mark [todo | in-progress | done] <id>
+  mark [todo | in-progress | done] <id>
   `;
 
 const VALID_ACTIONS = {
