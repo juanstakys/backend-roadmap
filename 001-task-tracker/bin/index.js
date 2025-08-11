@@ -70,13 +70,12 @@ const VALID_ACTIONS = {
 };
 
 // Argument parsing and validation
-const action_name =
-  argv[2] ??
-  (() => {
-    console.log("Indicate an action name");
-    console.log(COMMAND_USAGE);
-    process.exit(0);
-  })(); // IIFE
+if(argv[2] === undefined) {
+  console.log("Indicate an action name");
+  console.log(COMMAND_USAGE);
+  process.exit(0);
+}
+const action_name = argv[2]
 const action_info = argv.slice(3);
 
 if (!Object.keys(VALID_ACTIONS).includes(action_name)) {

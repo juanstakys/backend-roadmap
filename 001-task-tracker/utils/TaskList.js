@@ -75,7 +75,7 @@ class TaskList {
   }
 
   getLastId() {
-    if (this.list.length) return this.list[this.list.length - 1]?.id;
+    if (this.list.length) return this.list[this.list.length - 1].id;
     return 0;
   }
 
