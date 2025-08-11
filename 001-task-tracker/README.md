@@ -6,7 +6,7 @@ This program creates and tracks an easy-to-use portable todo list
 
 ## Requirements
 - Any GNU/Linux Debian based OS (other OSes not tested)
-- NodeJS v12.22.9 or older
+- NodeJS v12.22.9 or newer
 
 ## Installation
 
